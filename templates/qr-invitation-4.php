@@ -20,7 +20,7 @@
             </div>
             <div class="qrCodeSection">
                 <div class="col1"><img src="<?php echo esc_attr( $dataUri ); ?>" alt="QR Code" /></div>
-                <div class="col2"><p>4 mores details, please scan the QR code and RSVP online with love by <strong><?php echo esc_html($rsvp_deadline)?></strong>.</p></div>
+                <div class="col2"><p>Another For more details, please scan the QR code and RSVP online with love by <strong><?php echo esc_html($rsvp_deadline)?></strong>.</p></div>
             </div>
             <div class="bottomSection">
                 <p class="invitationUrl">WWW.BESTWISHES.COM/SERENITY</p>
