@@ -53,7 +53,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 .momentCaptureContainer {
-    position: relative!important;
+    position: relative;
 }
 
 .momentCapturedtopHeading h2 {
