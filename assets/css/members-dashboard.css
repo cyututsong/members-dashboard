@@ -1,0 +1,479 @@
+/* SPINNER LOADING STARTS */
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #ddd;
+    border-top: 4px solid #555;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* SPINNER LOADING ENDS */
+
+
+img.mbProfilepic {
+    height: 56px;
+    width: 56px;
+    border-radius: 100%!important;
+    object-fit: cover;
+    max-height: 56px;
+}
+
+.gf-entriesNav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+a.gf-export-btn {
+
+    background: #A6CDC6;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+
+a.gf-export-btn:hover {
+    background: #000000;
+    color: #fff;
+}
+
+.gf-download {
+    margin-top:17px;
+}
+
+
+
+/* QR CODE invitation CSS START */
+
+
+.invTemplate-1 {
+    display: flex;
+    max-width: 800px;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 3px;
+    border: 1px solid #dedede;
+    align-items: center;
+    background-image: url(https://localhost/bestwishes/wp-content/uploads/2025/04/sr-leaf-04.png);
+    background-repeat: no-repeat;
+    background-size: 500px;
+    min-height: 500px;
+    background-position: -100px -50px;
+}
+
+
+.invTemplate-1 .row-1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.invTemplate-1 .row-2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    max-width: 80%;
+}
+
+.invTemplate-1 h2 {
+    font-size: 10rem;
+    font-family: "Qwigley", sans-serif !important;
+}
+
+
+
+.invTemplate-2 {
+  background: #fff;
+  max-width: 600px;
+  padding: 20px 50px;
+  min-height: 850px;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  border: 1px solid #dedede;
+  border-radius: 5px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative; /* important for overlay */
+  overflow: hidden;   /* keeps overlay inside border radius */
+}
+
+.invTemplate-2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 70%; /* covers 70% of container height from bottom */
+  background: linear-gradient(
+    to top,
+    rgba(255,255,255,1) 0%,   /* strong white at very bottom */
+    rgba(255,255,255,0.9) 40%,  /* still visible higher up */
+    rgba(255,255,255,0.8) 75%,  /* softer fade */
+    rgba(255,255,255,0) 100%    /* fully transparent at top */
+  );
+  border-radius: inherit;
+  z-index: 1;
+}
+.invTemplate-2 > * {
+  position: relative;
+  z-index: 2; /* keep content above overlay */
+}
+
+
+.invTemplate-2 h2 {
+    font-size: 80px;
+}
+
+.invTemplate-2 img {
+    height: 180px !important;
+}
+
+.invTemplate-2 h4 {
+    font-size: 20px;
+}
+
+.invTemplate-2 p {
+    font-size: 18px;
+}
+
+
+
+/* QR CODE invitation CSS END */
+
+
+
+/* RSVP LISTVIEW START HERE */
+
+
+.e-n-tabs-heading {
+    display: none !important;
+}
+
+/* Entries Table Pagination */
+.gf-pagination {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.gf-pagination a {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 6px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #0073aa;
+    font-size: 14px;
+    transition: all 0.2s ease-in-out;
+}
+
+.gf-pagination a:hover {
+    background: #f1f1f1;
+    border-color: #ccc;
+}
+
+.gf-pagination a.active {
+    background: #A6CDC6;
+    color: #fff;
+    border-color: #A6CDC6;
+    font-weight: bold;
+    cursor: default;
+}
+
+li.elementor-icon-list-item {
+    cursor: pointer;
+}
+
+.gf-search-box {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.gf-search-box input.gf-search-input {
+    flex: 1;
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+    font-size: 14px;
+}
+
+.gf-search-box button.gf-search-btn {
+    padding: 6px 12px;
+    border: 1px solid #A6CDC6;
+    background: #A6CDC6;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+.gf-search-box button.gf-search-btn:hover {
+    background: #8db8b0;
+}
+
+
+/* Loader Spinner */
+.gf-loading {
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+    color: #555;
+    margin:0 auto;
+}
+
+.gf-loading .spinner {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ccc;
+    border-top: 2px solid #0073aa;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+
+/* RSVP LISTVIEW ENDS HERE */
+
+
+/* Capture Moment Start */
+
+.moment-capture-wrapper .divUploadContainer {
+    border: 1px solid;
+    width: 700px;
+    padding: 30px;
+    border-radius: 20px;
+    border: 2px solid #f1f1f1;
+    background-color: #fff;
+}
+
+.moment-capture-wrapper .innerUploadContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    padding: 20px;
+    border-radius: 20px;
+    border: 2px dashed #333;
+}
+
+
+.moment-capture-wrapper .innerUploadContainer .profile {
+    max-width: 150px !important;
+    width: 100% !important;
+    max-height: 150px !important;
+    height: 100% !important;
+    border-radius: 100% !important;
+    margin: 0 auto;
+}
+
+.moment-capture-wrapper .innerUploadContainer p {
+    margin: 20px auto;
+    width: 60%;
+    text-wrap: auto;
+    text-align: center;
+}
+
+.moment-capture-wrapper button#moment-upload-btn {
+    align-self: flex-start;
+    margin: 0 auto;
+}
+
+.moment-capture-wrapper div#moment-upload-preview img {
+    height: 30px !important;
+    width: 30px !important;
+    border-radius: 30px !important;
+    object-fit: cover;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.moment-capture-wrapper div#moment-upload-preview {
+    width: 70%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.moment-capture-wrapper p#add-more-image {
+    font-size: 14px;
+}
+
+.moment-capture-wrapper input#moment-submit-btn {
+    align-self: flex-start;
+    margin: 0 auto;
+}
+
+
+/* Css on display upload image in members dashboard start here */ 
+.moments-gallery {
+    display: flow;
+    flex-direction: row !important;
+    align-items: start !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+    flex-wrap: wrap;
+    min-height: 80vh;
+}
+
+
+.moments-gallery .moments-gallery-item {
+    transition: transform 0.3s ease;
+    max-width: 200px;
+    width: 100%!important; /* Ensures images fill their container up to the max-width */
+    height: 260px!important;
+    box-sizing: border-box; /* Prevents padding/margins from overflowing */
+    margin:0px!important;
+    padding:0px 3px;
+    object-fit: cover!important;
+}
+
+.moments-gallery .moments-gallery-item:hover {
+    transform: scale(1.05); /* Optional: Slight zoom effect */
+}
+
+.download-folder-btn {
+    margin-left:15px; 
+    padding:6px 12px; 
+    background:#A6CDC6; 
+    color:#fff; 
+    border-radius:4px; 
+    text-decoration:none;
+}
+
+.paginationNav a {
+    background: #A6CDC6;
+    padding: 5px 10px;
+    border-radius: 3px;
+    color:#fff;
+}
+/* Css on display upload image in members dashboard start Here */ 
+
+
+
+/* Gallery Modal Start */
+
+    .image-modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        inset: 0;
+        background: rgba(0,0,0,0.9);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .image-modal.active {
+        display: flex;
+    }
+
+    .image-modal img {
+        max-width: 90%;
+        max-height: 80vh;
+        border-radius: 10px;
+        transition: opacity 0.3s ease;
+        opacity: 1;
+    }
+
+    .image-modal img.fade-out {
+        opacity: 0;
+    }
+
+    .image-modal .close {
+        position: absolute;
+        top: 20px;
+        right: 35px;
+        color: #fff;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 10000;
+    }
+
+    .image-modal .prev,
+    .image-modal .next {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 16px;
+        color: #333333;
+        font-weight: bold;
+        font-size: 40px;
+        transition: 0.3s;
+        user-select: none;
+        z-index: 10000;
+    }
+
+    .image-modal .prev:hover, .image-modal .next:hover  {
+        color: #fff!important;
+        transition: color 600ms ease-in-out;
+    } 
+
+    .moments-gallery .moments-gallery-item:hover {
+        cursor: pointer;
+    }
+
+    .image-modal .prev { left: 20px; }
+    .image-modal .next { right: 20px; }
+
+    .image-modal .prev:hover,
+    .image-modal .next:hover {
+    color: #ccc;
+    }
+
+
+/* Gallery Modal Ends */
+
+
+@media only screen and (max-width: 600px) {
+
+ .moment-capture-wrapper  .divUploadContainer {
+        width: 100%;
+    }
+
+ .moment-capture-wrapper  .innerUploadContainer p {
+        width: 90%;
+    }
+}
+
+
+
+
+/* Capture Moment Ends */
+
+
+/* Invitation Card Download CSS START Here */
+
+
+
+
+
+
+/* Invitation Card Download CSS START End Here */
