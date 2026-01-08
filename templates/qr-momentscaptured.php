@@ -73,6 +73,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     justify-content: space-between;
     min-height: 600px;
     width: 70%;
+    min-width: 430px;
     max-width: 450px;
     margin: 0 auto;
     background: #fff;

@@ -50,6 +50,7 @@
     flex-direction: row;
     height: 600px;
     width: 100%;
+    min-width: 600px;
     max-width: 600px;
     border: 1px solid #d3d3d3;
 }
