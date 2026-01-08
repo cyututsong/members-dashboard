@@ -164,7 +164,6 @@
   height: 30px;
 }
 
-
 .InvitationContainer:hover .overlayDownloadInvitation {
     display:flex;
 }
