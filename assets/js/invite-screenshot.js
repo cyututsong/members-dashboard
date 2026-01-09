@@ -1,86 +1,110 @@
-jQuery(function ($) {
-
-    // Helper: wait for images inside a container
-    function allImagesLoaded(container) {
+jQuery(function($){
+    function allImagesLoaded(container){
         const imgs = container.querySelectorAll('img');
         const promises = [];
-
         imgs.forEach(img => {
             if (img.complete) return;
-            promises.push(new Promise(resolve => {
-                img.onload = img.onerror = resolve;
+            promises.push(new Promise(res => {
+                img.onload = img.onerror = res;
             }));
         });
-
         return Promise.all(promises);
     }
 
-    // Main capture function (works even if inside inactive tab)
-    function captureFromHiddenTab() {
+    $('#downloadInviteBtn').on('click', function(e){
+        e.preventDefault();
 
-        const node = document.getElementById('inviteMomentCapturedCard');
-        const resultImg = document.querySelector('.inviteMomentCapturedCardResult');
-
+        var node = document.getElementById('inviteCard');
         if (!node) {
-            console.error('inviteMomentCapturedCard element not found');
-            return;
-        }
-
-        if (!resultImg) {
-            console.error('Result image (.inviteMomentCapturedCardResult) not found');
+            console.error('inviteCard element not found');
+            alert('Invitation element not found on this page.');
             return;
         }
 
         if (typeof html2canvas === 'undefined') {
             console.error('html2canvas not loaded');
+            alert('Screenshot tool is not loaded. Try again later.');
             return;
         }
 
-        // Clone the hidden tab content
-        const clone = node.cloneNode(true);
-
-        clone.style.display = 'block';
-        clone.style.position = 'absolute';
-        clone.style.left = '-9999px';
-        clone.style.top = '0';
-        clone.style.visibility = 'visible';
-        clone.style.opacity = '1';
-        clone.style.transform = 'none';
-
-        document.body.appendChild(clone);
-
-        // Wait for images + fonts
-        Promise.all([
-            allImagesLoaded(clone),
-            document.fonts.ready,
-            new Promise(r => setTimeout(r, 300))
-        ]).then(() => {
-
-            html2canvas(clone, {
-                scale: 2,
-                useCORS: true,
-                allowTaint: false,
-                backgroundColor: '#fff'
-            })
-            .then(canvas => {
-
-                resultImg.src = canvas.toDataURL('image/png');
-                resultImg.style.display = 'block';
-                resultImg.classList.add('is-loaded');
-
-                console.log('Image captured successfully');
-
-                clone.remove();
-            })
-            .catch(err => {
-                console.error('html2canvas error:', err);
-                clone.remove();
-            });
-
+        // Wait for inner images to load (important for correct capture)
+        allImagesLoaded(node).then(function(){
+            // optional small delay to ensure fonts/rendering
+            setTimeout(function(){
+                html2canvas(node, {
+                    scale: 2,         // higher scale = sharper image
+                    useCORS: true,    // allow cross-origin images if CORS headers present
+                    allowTaint: false,
+                    backgroundColor: null
+                }).then(function(canvas){
+                    // use blob for better memory handling
+                    canvas.toBlob(function(blob){
+                        var link = document.createElement('a');
+                        link.download = 'invitation.png';
+                        link.href = URL.createObjectURL(blob);
+                        document.body.appendChild(link);
+                        link.click();
+                        // cleanup
+                        setTimeout(function(){
+                            URL.revokeObjectURL(link.href);
+                            link.remove();
+                        }, 1000);
+                    }, 'image/png');
+                }).catch(function(err){
+                    console.error('html2canvas error', err);
+                    alert('Failed to generate image. See console for details.');
+                });
+            }, 100); // tweak if needed
         });
-    }
+    });
 
-    // Run automatically on page load
-    captureFromHiddenTab();
+
+    $('#downloadCapturedBtn').on('click', function(e){
+        e.preventDefault();
+
+        var node = document.getElementById('inviteMomentCapturedCard');
+        if (!node) {
+            console.error('inviteCard element not found');
+            alert('Invitation element not found on this page.');
+            return;
+        }
+
+        if (typeof html2canvas === 'undefined') {
+            console.error('html2canvas not loaded');
+            alert('Screenshot tool is not loaded. Try again later.');
+            return;
+        }
+
+        // Wait for inner images to load (important for correct capture)
+        allImagesLoaded(node).then(function(){
+            // optional small delay to ensure fonts/rendering
+            setTimeout(function(){
+                html2canvas(node, {
+                    scale: 2,         // higher scale = sharper image
+                    useCORS: true,    // allow cross-origin images if CORS headers present
+                    allowTaint: false,
+                    backgroundColor: null
+                }).then(function(canvas){
+                    // use blob for better memory handling
+                    canvas.toBlob(function(blob){
+                        var link = document.createElement('a');
+                        link.download = 'capturemoments.png';
+                        link.href = URL.createObjectURL(blob);
+                        document.body.appendChild(link);
+                        link.click();
+                        // cleanup
+                        setTimeout(function(){
+                            URL.revokeObjectURL(link.href);
+                            link.remove();
+                        }, 1000);
+                    }, 'image/png');
+                }).catch(function(err){
+                    console.error('html2canvas error', err);
+                    alert('Failed to generate image. See console for details.');
+                });
+            }, 100); // tweak if needed
+        });
+    });
+
 
 });
