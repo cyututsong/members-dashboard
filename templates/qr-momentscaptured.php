@@ -4,7 +4,6 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
     $page_url = preg_replace('#^https?://#', 'www.', $page_url);
-
 ?>
 
 <div class="momentCaptureContainer">
@@ -36,7 +35,6 @@ if ( ! defined( 'ABSPATH' ) ) {
             </div>
         </div>
 
-
     </div>
 
     <img src="" alt="" class="inviteMomentCapturedCardResult">
@@ -45,12 +43,13 @@ if ( ! defined( 'ABSPATH' ) ) {
         <button id="downloadCapturedBtn" class="btnInvitation">Download Your Invitation <img src="https://aswecelebrate.com/wp-content/uploads/2025/09/file-1.png"/></button>
     </div>
 
-
-
 </div>
 
 <style>
 
+img.inviteMomentCapturedCardResult {
+    margin: 0 auto;
+}
 
 .momentCaptureContainer {
     position: relative;

@@ -29,6 +29,8 @@
 
     </div>
 
+    <img src="" alt="" class="invitationContainerResult">
+
     <div class="overlayDownloadInvitation">
         <button id="downloadInviteBtn" class="btnInvitation">Download Your Invitation <img src="https://aswecelebrate.com/wp-content/uploads/2025/09/file-1.png"/></button>
     </div>
