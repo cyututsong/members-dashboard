@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <img src="<?php echo esc_attr( $dataUri ); ?>" alt="QR Code" />
             </div>
             <div class="col-2">
-                <p>We want to see our day through your eyes!</p>
+                <p>We want to see our day through your eyes!!</p>
             </div>
         </div>
         <div class="row row-3">
