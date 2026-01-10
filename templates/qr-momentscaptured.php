@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         </div>
         <div class="row row-3">
             <div class="bottomSection">
-                <p>Upload your photos to our online album so we don't miss out of any of the fun</p>
+                <p>Upload your photos to our online album so we don't miss out of any of the fun.</p>
             </div>
             <div class="groomandbride">
                 <p><?php echo $groom_name; ?></p>
