@@ -40,7 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <img src="" alt="" class="inviteMomentCapturedCardResult">
 
     <div class="overlayDownloadInvitation">
-        <button id="downloadCapturedBtn" class="btnInvitation">Download Your Invitation <img src="https://aswecelebrate.com/wp-content/uploads/2025/09/file-1.png"/></button>
+        <button id="downloadCapturedBtn" class="btnInvitation">Download Your Invitation<img src="https://aswecelebrate.com/wp-content/uploads/2025/09/file-1.png"/></button>
     </div>
 
 </div>
