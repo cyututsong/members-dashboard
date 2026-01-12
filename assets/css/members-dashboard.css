@@ -463,17 +463,14 @@ li.elementor-icon-list-item {
     }
 }
 
-
-
-
 /* Capture Moment Ends */
 
 
-/*  MEMBERS DASHBOARD STYLES FOR MOBILE  */
+/*  CSS FOR MOBILE  */
 
 @media only screen and (max-width: 700px) {
     
-    .dashBoardNav {
+    .page-id-1367 .dashBoardNav {
         position: fixed;
         z-index: 2;
         width: 50vw;
@@ -522,7 +519,7 @@ li.elementor-icon-list-item {
     }    
         
     
-/* Mobile Styles */
+    /* TABLE */
 
     .gf-entries-table thead {
         display: none;
