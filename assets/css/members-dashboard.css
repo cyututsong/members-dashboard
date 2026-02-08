@@ -19,11 +19,10 @@
 
 
 img.mbProfilepic {
-    height: 56px;
-    width: 56px;
+    height: 56px!important;
+    width: 56px!important;
     border-radius: 100%!important;
     object-fit: cover;
-    max-height: 56px;
 }
 
 .gf-entriesNav {
@@ -287,13 +286,15 @@ li.elementor-icon-list-item {
 
 
 .moment-capture-wrapper .innerUploadContainer .profile {
-    max-width: 150px !important;
+    max-width: 120px !important;
     width: 100% !important;
-    max-height: 150px !important;
+    min-height: 120px !important;
     height: 100% !important;
     border-radius: 100% !important;
     margin: 0 auto;
+    object-fit: cover;
 }
+
 
 .moment-capture-wrapper .innerUploadContainer p {
     margin: 20px auto;
