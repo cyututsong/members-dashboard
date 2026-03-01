@@ -35,6 +35,7 @@ jQuery(function ($) {
         const originalElements = original.querySelectorAll('*');
         const clonedElements = cloned.querySelectorAll('*');
 
+
         clonedElements.forEach((element, index) => {
             if (originalElements[index]) {
                 const styles = window.getComputedStyle(originalElements[index]);
@@ -102,40 +103,40 @@ jQuery(function ($) {
                 logging: true,
                 imageTimeout: 0
             })
-            .then(canvas => {
+                .then(canvas => {
 
-                resultImg.src = canvas.toDataURL('image/png');
-                resultImg.style.display = 'block';
-                resultImg.classList.add('is-loaded');
-
-                console.log('Image captured successfully');
-
-                clone.remove();
-                node.style.display = 'none';
-            })
-            .catch(err => {
-                console.error('html2canvas error:', err);
-                console.log('Attempting to capture with fallback settings...');
-                
-                // Fallback: try again with different settings
-                html2canvas(clone, {
-                    scale: 1,
-                    allowTaint: true,
-                    backgroundColor: '#fff',
-                    useCORS: false,
-                    proxy: null
-                }).then(canvas => {
                     resultImg.src = canvas.toDataURL('image/png');
                     resultImg.style.display = 'block';
                     resultImg.classList.add('is-loaded');
-                    console.log('Image captured with fallback');
+
+                    console.log('Image captured successfully');
+
                     clone.remove();
                     node.style.display = 'none';
-                }).catch(fallbackErr => {
-                    console.error('Fallback html2canvas error:', fallbackErr);
-                    clone.remove();
+                })
+                .catch(err => {
+                    console.error('html2canvas error:', err);
+                    console.log('Attempting to capture with fallback settings...');
+
+                    // Fallback: try again with different settings
+                    html2canvas(clone, {
+                        scale: 1,
+                        allowTaint: true,
+                        backgroundColor: '#fff',
+                        useCORS: false,
+                        proxy: null
+                    }).then(canvas => {
+                        resultImg.src = canvas.toDataURL('image/png');
+                        resultImg.style.display = 'block';
+                        resultImg.classList.add('is-loaded');
+                        console.log('Image captured with fallback');
+                        clone.remove();
+                        node.style.display = 'none';
+                    }).catch(fallbackErr => {
+                        console.error('Fallback html2canvas error:', fallbackErr);
+                        clone.remove();
+                    });
                 });
-            });
         });
     }
 
@@ -161,20 +162,20 @@ jQuery(function ($) {
     // Handle download button click - Wedding Invitation
     const downloadInviteBtn = document.querySelector('#downloadInviteBtn');
     if (downloadInviteBtn) {
-        downloadInviteBtn.addEventListener('click', function() {
+        downloadInviteBtn.addEventListener('click', function () {
             const resultImg = document.querySelector('.invitationContainerResult');
-            
+
             if (!resultImg || !resultImg.src) {
                 console.error('No captured image available to download');
                 return;
             }
-            
+
             const link = document.createElement('a');
             link.href = resultImg.src;
             link.download = 'wedding-invitation.png';
             document.body.appendChild(link);
             link.click();
-            document.body.removeChild(link);     
+            document.body.removeChild(link);
             console.log('Wedding invitation downloaded successfully');
         });
     }
@@ -182,20 +183,20 @@ jQuery(function ($) {
     // Handle download button clicks - Captured Moments
     const downloadBtn = document.querySelector('#downloadCapturedBtn');
     if (downloadBtn) {
-        downloadBtn.addEventListener('click', function() {
-            const resultImg = document.querySelector('.inviteMomentCapturedCardResult');    
-            
+        downloadBtn.addEventListener('click', function () {
+            const resultImg = document.querySelector('.inviteMomentCapturedCardResult');
+
             if (!resultImg || !resultImg.src) {
                 console.error('No captured image available to download');
                 return;
-            }    
+            }
 
             const link = document.createElement('a');
             link.href = resultImg.src;
             link.download = 'captured-moments.png';
             document.body.appendChild(link);
             link.click();
-            document.body.removeChild(link);     
+            document.body.removeChild(link);
             console.log('Captured moments downloaded successfully');
         });
     }

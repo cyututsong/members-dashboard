@@ -20,7 +20,6 @@ function moment_capture_upload() {
         ";
     }
 
-
     // 🔹 Verify user exists and email matches
     $user = get_userdata($user_id);
     if (!$user || strtolower($user->user_email) !== strtolower($email)) {
@@ -35,6 +34,64 @@ function moment_capture_upload() {
     $profile_picture = get_user_meta( $user_id, 'profile_picture', true );
 
     ?>
+   <style>
+   .progress-container {
+       width: 100%;
+       background-color: #f0f0f0;
+       border-radius: 25px;
+       margin: 20px 0;
+       overflow: hidden;
+       box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+   }
+   
+   .progress-bar {
+       width: 0%;
+       height: 30px;
+       background: linear-gradient(45deg, #4CAF50, #45a049);
+       border-radius: 25px;
+       transition: width 0.3s ease-in-out;
+       position: relative;
+       overflow: hidden;
+   }
+   
+   .progress-bar::after {
+       content: '';
+       position: absolute;
+       top: 0;
+       left: 0;
+       right: 0;
+       bottom: 0;
+       background: linear-gradient(
+           90deg,
+           rgba(255,255,255,0.1) 25%,
+           rgba(255,255,255,0.3) 50%,
+           rgba(255,255,255,0.1) 75%
+       );
+       animation: shimmer 2s infinite;
+       transform: skewX(-20deg);
+   }
+   
+   @keyframes shimmer {
+       0% { transform: translateX(-100%) skewX(-20deg); }
+       100% { transform: translateX(200%) skewX(-20deg); }
+   }
+   
+   .progress-text {
+       text-align: center;
+       margin-top: 5px;
+       font-size: 16px;
+       color: #333;
+       font-weight: bold;
+   }
+   
+   .file-status {
+       text-align: center;
+       margin-top: 5px;
+       font-size: 14px;
+       color: #666;
+   }
+   </style>
+
    <div class="moment-capture-wrapper">
         <form id="moment-capture-form" method="post" enctype="multipart/form-data">
             <input type="file" name="moment_images[]" id="moment_images" multiple accept="image/*" style="display:none;" />
@@ -43,7 +100,7 @@ function moment_capture_upload() {
                 <div class="innerUploadContainer">
                     <img class="profile" src="<?php echo esc_url( $profile_picture ); ?>" alt="Profile">
 
-                    <p  id="moment-upload-message" class="simpleMessage">Please share your captured moments during our wedding. Thank you ❤️</p>
+                    <p id="moment-upload-message" class="simpleMessage">Please share your captured moments during our wedding. Thank you ❤️</p>
 
                     <!-- Preview + Message -->
                     <div id="moment-upload-preview"></div>
@@ -51,10 +108,13 @@ function moment_capture_upload() {
                     <button type="button" id="moment-upload-btn">Select Images</button>
                     <input type="submit" id="moment-submit-btn" name="submit_moment_images" value="Upload" style="display:none;" />
                     
-                    <!-- Loading notification -->
-                    <div id="moment-loading" style="display:none; margin-top:15px;">
-                        <div class="spinner" style="display:block;"></div>
-                        <p style="margin-top:10px;">Uploading images, please wait...</p>
+                    <!-- Progress Bar -->
+                    <div id="moment-upload-progress" style="display:none; margin-top:15px; width:100%;">
+                        <div class="progress-container">
+                            <div class="progress-bar" id="upload-progress-bar"></div>
+                        </div>
+                        <div class="progress-text" id="upload-progress-text">0%</div>
+                        <div class="file-status" id="upload-file-status"></div>
                     </div>
 
                 </div>
@@ -71,7 +131,10 @@ function moment_capture_upload() {
         const preview     = document.getElementById("moment-upload-preview");
         const form        = document.getElementById("moment-capture-form");
         const messageBox  = document.getElementById("moment-upload-message");
-        const loadingBox = document.getElementById("moment-loading");
+        const progressContainer = document.getElementById("moment-upload-progress");
+        const progressBar = document.getElementById("upload-progress-bar");
+        const progressText = document.getElementById("upload-progress-text");
+        const fileStatus = document.getElementById("upload-file-status");
 
         let allFiles = [];
 
@@ -109,40 +172,63 @@ function moment_capture_upload() {
             fileInput.click();
         });
 
-                // Handle upload
+        // Handle upload
         form.addEventListener("submit", function(e){
             if (allFiles.length > 0) {
                 e.preventDefault();
 
-            // 🔹 Show loading
-            loadingBox.style.display = "block";
-            addMoreLink.style.display = "none";
-            uploadBtn.style.display = "none";
-            messageBox.style.display = "none";
-            selectBtn.style.display = "none";
-            preview.style.display = "none";
-            uploadBtn.disabled = true;
-            selectBtn.disabled = true;
-            addMoreLink.style.pointerEvents = "none";
-            messageBox.innerHTML = "Uploading your images...";
-            messageBox.style.color = "#555";
+                // 🔹 Show progress bar
+                progressContainer.style.display = "block";
+                addMoreLink.style.display = "none";
+                uploadBtn.style.display = "none";
+                messageBox.style.display = "none";
+                selectBtn.style.display = "none";
+                preview.style.display = "none";
+                
+                uploadBtn.disabled = true;
+                selectBtn.disabled = true;
+                addMoreLink.style.pointerEvents = "none";
+                
+                // Initialize progress
+                progressBar.style.width = "0%";
+                progressText.textContent = "0%";
+                fileStatus.textContent = `Uploading 0 of ${allFiles.length} files...`;
 
-            const formData = new FormData(form);
-            allFiles.forEach(file => {
-                formData.append("moment_images[]", file, file.name);
-            });
-            
-            formData.append("submit_moment_images", "1");
+                const formData = new FormData(form);
+                allFiles.forEach(file => {
+                    formData.append("moment_images[]", file, file.name);
+                });
+                
+                formData.append("submit_moment_images", "1");
 
-                    fetch(window.location.href, {
-                        method: "POST",
-                        body: formData
-                    })
-                    .then(res => res.text())
-                    .then(() => {
-                        // 🔹 Hide loading
-                        loadingBox.style.display = "none";
+                // Create XMLHttpRequest for progress tracking
+                const xhr = new XMLHttpRequest();
+                
+                // Track upload progress
+                xhr.upload.addEventListener("progress", function(e) {
+                    if (e.lengthComputable) {
+                        const percentComplete = Math.round((e.loaded / e.total) * 100);
+                        progressBar.style.width = percentComplete + "%";
+                        progressText.textContent = percentComplete + "%";
+                        
+                        // Estimate which file is being uploaded
+                        const estimatedFileIndex = Math.floor((e.loaded / e.total) * allFiles.length);
+                        const currentFile = Math.min(estimatedFileIndex + 1, allFiles.length);
+                        fileStatus.textContent = `Uploading ${currentFile} of ${allFiles.length} files...`;
+                    }
+                });
 
+                // Handle completion
+                xhr.addEventListener("load", function() {
+                    progressBar.style.width = "100%";
+                    progressText.textContent = "100%";
+                    fileStatus.textContent = `Upload complete! ${allFiles.length} files uploaded.`;
+                    
+                    setTimeout(() => {
+                        // Hide progress
+                        progressContainer.style.display = "none";
+                        
+                        // Reset and show success message
                         allFiles = [];
                         preview.innerHTML = "";
                         messageBox.innerHTML = "🎉 Thanks for sharing your moments with us! Feel free to upload more anytime.";
@@ -155,18 +241,32 @@ function moment_capture_upload() {
                         addMoreLink.style.display = "none";
                         preview.style.display = "block";
 
-
                         uploadBtn.disabled = false;
                         selectBtn.disabled = false;
                         addMoreLink.style.pointerEvents = "auto";
-                    })
-                    .catch(err => {
-                        loadingBox.style.display = "none";
-                        messageBox.innerHTML = "❌ Upload failed. Please try again.";
-                        messageBox.style.color = "red";
-                        console.error("Upload failed", err);
-                    });
-                }
+                    }, 1000);
+                });
+
+                xhr.addEventListener("error", function() {
+                    progressContainer.style.display = "none";
+                    messageBox.innerHTML = "❌ Upload failed. Please try again.";
+                    messageBox.style.color = "red";
+                    messageBox.style.display = "block";
+                    
+                    // Reset buttons
+                    selectBtn.style.display = "inline-block";
+                    uploadBtn.style.display = "none";
+                    addMoreLink.style.display = "none";
+                    
+                    uploadBtn.disabled = false;
+                    selectBtn.disabled = false;
+                    addMoreLink.style.pointerEvents = "auto";
+                });
+
+                // Open and send request
+                xhr.open("POST", window.location.href, true);
+                xhr.send(formData);
+            }
         });
     });
     </script>
