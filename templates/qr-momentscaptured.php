@@ -184,6 +184,4 @@ img.inviteMomentCapturedCardResult {
     display:flex;
 }
 
-
-
 </style>

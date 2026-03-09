@@ -23,7 +23,7 @@
                 <div class="col2"><p>For more details, please scan the QR code and RSVP online with love by <strong><?php echo esc_html($rsvp_deadline)?></strong>.</p></div>
             </div>
             <div class="bottomSection">
-                <p class="invitationUrl">WWW.BESTWISHES.COM/SERENITY</p>
+                <p class="invitationUrl"><?php echo $page_url; ?></p>
              </div>
         </div>
 
